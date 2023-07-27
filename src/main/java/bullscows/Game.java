@@ -11,17 +11,30 @@ public class Game {
 
     public void startGame() {
         System.out.println("Input the length of the secret code:");
-        int length = scanner.nextInt();
+        int length = 0;
+        String inputLength = scanner.nextLine();
+        try {
+            length = Integer.parseInt(inputLength);
+        } catch (Exception e) {
+            stopGame("\nError: " + inputLength + " isn't a valid number.\n");
+        }
 
         System.out.println("Input the number of possible symbols in the code:");
         int difficulty = scanner.nextInt();
 
-        if (length > 0 && length <= difficulty) {
-            setSecretNumber(length, difficulty);
-            System.out.printf("The secret is prepared: %s (%s).\nOkay, let's start a game!\n", maskedNumber(difficulty), availableRange(difficulty));
+        int MAX_RANGE = 36;
+        if (length > difficulty) {
+            stopGame("\nError: it's not possible to generate a code with a length of " +
+                    length + " with " + difficulty + " unique symbols.\n");
+        } else if (difficulty > MAX_RANGE) {
+            stopGame("\nError: maximum number of possible symbols in the code is 36 (0-9, a-z).\n");
+        } else if (length <= 0) {
+            stopGame("Error: length should be bigger than 0");
         } else {
-            System.out.println("Error: can't generate a secret number with a " +
-                            "length of 11 because there aren't enough unique digits.");
+            setSecretNumber(length, difficulty);
+            System.out.printf(
+                    "The secret is prepared: %s (%s).\nOkay, let's start a game!\n",
+                    maskedNumber(difficulty), availableRange(difficulty));
         }
     }
 
@@ -57,5 +70,10 @@ public class Game {
             turn++;
         } while (!checkWin());
         System.out.println("Congratulations! You guessed the secret code.");
+    }
+
+    private void stopGame(String errorMessage) {
+        System.out.println(errorMessage);
+        System.exit(0);
     }
 }

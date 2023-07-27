@@ -20,7 +20,13 @@ public class Game {
         }
 
         System.out.println("Input the number of possible symbols in the code:");
-        int difficulty = scanner.nextInt();
+        int difficulty = 0;
+        String inputDifficulty = scanner.nextLine();
+        try {
+            difficulty = Integer.parseInt(inputDifficulty);
+        } catch (Exception e) {
+            stopGame("\nError: " + inputDifficulty + " isn't a valid number.\n");
+        }
 
         int MAX_RANGE = 36;
         if (length > difficulty) {
@@ -34,19 +40,19 @@ public class Game {
             setSecretNumber(length, difficulty);
             System.out.printf(
                     "The secret is prepared: %s (%s).\nOkay, let's start a game!\n",
-                    maskedNumber(difficulty), availableRange(difficulty));
+                    maskedNumber(length), availableRange(difficulty));
         }
     }
 
-    private String maskedNumber(int difficulty) {
-        return "*".repeat(difficulty);
+    private String maskedNumber(int length) {
+        return "*".repeat(length);
     }
 
     private String availableRange(int difficulty) {
         if (difficulty <= 10) {
-            return "0-9";
+            return "0-" + secret.getDefaultRange().get(difficulty - 1);
         } else if (difficulty <= secret.getDefaultRange().size()) {
-            return "0-9, a-" + secret.getDefaultRange().get(difficulty - 1); // Вот здесь неправильно вычисляется индекс
+            return "0-9, a-" + secret.getDefaultRange().get(difficulty - 1);
         } else return null;
     }
 

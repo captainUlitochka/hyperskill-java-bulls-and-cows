@@ -1,5 +1,6 @@
 package bullscows;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +19,8 @@ public class Number {
         this.length = length;
         this.difficulty = difficulty;
         // Generating a pseudorandom number
-        List<Character> playersRange = defaultRange.subList(0,difficulty);
+
+        List<Character> playersRange = new ArrayList<>(defaultRange.subList(0,difficulty));
         Collections.shuffle(playersRange);
         this.value = playersRange.stream().limit(length).map(String::valueOf).collect(Collectors.joining(""));
     }

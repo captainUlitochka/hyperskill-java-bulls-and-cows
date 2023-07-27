@@ -18,8 +18,7 @@ public class Game {
 
         if (length > 0 && length <= difficulty) {
             setSecretNumber(length, difficulty);
-            System.out.printf("The secret is prepared: %s (%s).\n", maskedNumber(difficulty), availableRange(difficulty));
-            System.out.println("Okay, let's start a game!");
+            System.out.printf("The secret is prepared: %s (%s).\nOkay, let's start a game!\n", maskedNumber(difficulty), availableRange(difficulty));
         } else {
             System.out.println("Error: can't generate a secret number with a " +
                             "length of 11 because there aren't enough unique digits.");
@@ -34,7 +33,7 @@ public class Game {
         if (difficulty <= 10) {
             return "0-9";
         } else if (difficulty <= secret.getDefaultRange().size()) {
-            return "0-9, a-" + secret.getDefaultRange().get(difficulty); // Вот здесь неправильно вычисляется индекс
+            return "0-9, a-" + secret.getDefaultRange().get(difficulty - 1); // Вот здесь неправильно вычисляется индекс
         } else return null;
     }
 

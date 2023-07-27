@@ -6,17 +6,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Number {
-    private int length;
-    private String value;
+    private final int length;
+    private final String value;
+    private final int difficulty;
 
-    public Number(int length) {
+    List<Character> list = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+            'm', 'n', 'o', 'p', 'q', 'r', 's', 't','u','v','w','x','y','z');
+
+    public Number(int length, int difficulty) {
         this.length = length;
+        this.difficulty = difficulty;
         // Generating a pseudorandom number
-        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        while (list.get(0) == 0) {
-            Collections.shuffle(list);
-        }
-        this.value = list.stream().limit(length).map(String::valueOf).collect(Collectors.joining(""));
+        List<Character> newList = list.subList(0,difficulty);
+
+            Collections.shuffle(newList);
+        this.value = newList.stream().limit(length).map(String::valueOf).collect(Collectors.joining(""));
     }
 
     @Override

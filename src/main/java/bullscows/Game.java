@@ -11,10 +11,12 @@ public class Game {
 
     public void startGame() {
 
-        System.out.println("Please, enter the secret code's length:");
+        System.out.println("Input the length of the secret code:");
         int length = scanner.nextInt();
-        if (length > 0 && length < 10) {
-            setSecretNumber(length);
+        System.out.println("Input the number of possible symbols in the code:");
+        int difficulty = scanner.nextInt();
+        if (length > 0 && length <= difficulty) {
+            setSecretNumber(length, difficulty);
             System.out.println("Okay, let's start a game!");
         } else {
             System.out.println("Error: can't generate a secret number with a " +
@@ -22,8 +24,8 @@ public class Game {
         }
     }
 
-    private void setSecretNumber(int length) {
-        secret = new Number(length);
+    private void setSecretNumber(int length, int difficulty) {
+        secret = new Number(length, difficulty);
     }
 
     private String compareNumber() {

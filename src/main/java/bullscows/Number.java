@@ -10,7 +10,7 @@ public class Number {
     private final String value;
     private final int difficulty;
 
-    List<Character> list = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    List<Character> defaultRange = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't','u','v','w','x','y','z');
 
@@ -18,10 +18,13 @@ public class Number {
         this.length = length;
         this.difficulty = difficulty;
         // Generating a pseudorandom number
-        List<Character> newList = list.subList(0,difficulty);
+        List<Character> playersRange = defaultRange.subList(0,difficulty);
+        Collections.shuffle(playersRange);
+        this.value = playersRange.stream().limit(length).map(String::valueOf).collect(Collectors.joining(""));
+    }
 
-            Collections.shuffle(newList);
-        this.value = newList.stream().limit(length).map(String::valueOf).collect(Collectors.joining(""));
+    public List<Character> getDefaultRange() {
+        return defaultRange;
     }
 
     @Override
